@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 
 
@@ -11,11 +12,22 @@ SYSTEM_FACT_CHECK = (
 )
 
 
+def _max_context_chars() -> int:
+    return int(os.getenv("DNH_MAX_CONTEXT_CHARS", "6000"))
+
+
+def _truncate(text: str, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    return text[:max_chars].rstrip() + "\n[TRUNCATED]"
+
+
 def format_context(context: Any, k: int | None = None) -> str:
+    max_chars = _max_context_chars()
     if context is None:
         return ""
     if isinstance(context, str):
-        return context
+        return _truncate(context, max_chars)
     if isinstance(context, list):
         rows = context[:k] if k else context
         parts: list[str] = []
@@ -25,8 +37,8 @@ def format_context(context: Any, k: int | None = None) -> str:
             else:
                 text = str(item)
             parts.append(f"[{idx}] {text}")
-        return "\n".join(parts)
-    return str(context)
+        return _truncate("\n".join(parts), max_chars)
+    return _truncate(str(context), max_chars)
 
 
 def zero_context_prompt(claim: str) -> str:

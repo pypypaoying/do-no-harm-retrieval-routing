@@ -22,4 +22,8 @@ export KIMI_API_KEY=...
 export KIMI_BASE_URL=https://api.moonshot.cn/v1
 export DEEPSEEK_API_KEY=...
 export DEEPSEEK_BASE_URL=https://api.deepseek.com
+export DNH_MAX_CONTEXT_CHARS=6000
 ```
+
+Keep `DNH_MAX_CONTEXT_CHARS` at 6000 for smoke/full API runs unless you intentionally want
+to spend more on long contexts.

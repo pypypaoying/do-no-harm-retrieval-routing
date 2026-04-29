@@ -1,4 +1,7 @@
+import os
+
 from dnh_router.parse import normalize_label, parse_confidence, parse_model_output
+from dnh_router.prompts import format_context
 
 
 def test_normalize_label_variants():
@@ -15,3 +18,15 @@ def test_parse_model_output_json():
 
 def test_parse_confidence_percent():
     assert parse_confidence("confidence: 73%") == 0.73
+
+
+def test_context_truncation():
+    old = os.environ.get("DNH_MAX_CONTEXT_CHARS")
+    os.environ["DNH_MAX_CONTEXT_CHARS"] = "10"
+    try:
+        assert "[TRUNCATED]" in format_context("a" * 20)
+    finally:
+        if old is None:
+            os.environ.pop("DNH_MAX_CONTEXT_CHARS", None)
+        else:
+            os.environ["DNH_MAX_CONTEXT_CHARS"] = old
