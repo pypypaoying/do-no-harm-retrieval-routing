@@ -119,6 +119,12 @@ DeepSeek：
 API: check DeepSeek
 ```
 
+DeepSeek V4-Pro：
+
+```text
+API: check DeepSeek V4 Pro
+```
+
 Qwen：
 
 ```text
@@ -139,6 +145,12 @@ DeepSeek：
 
 ```text
 API: DeepSeek 20-example smoke
+```
+
+DeepSeek V4-Pro：
+
+```text
+API: DeepSeek V4 Pro 20-example smoke
 ```
 
 终端等价命令：
@@ -169,6 +181,12 @@ Get-Content runs\deepseek-smoke\candidates\deepseek-chat-k5.jsonl | Measure-Obje
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\generate_candidates.py --input data\raguard.jsonl --output runs\deepseek-pilot\candidates\deepseek-chat-k5.jsonl --provider deepseek --model deepseek-chat --k 5 --limit 200 --batch-size 2
+```
+
+DeepSeek V4-Pro 200 条示例：
+
+```powershell
+.\.venv\Scripts\python.exe scripts\generate_candidates.py --input data\raguard.jsonl --output runs\deepseek-v4-pro-pilot\candidates\deepseek-v4-pro-k5.jsonl --provider deepseek --model deepseek-v4-pro --k 5 --limit 200 --batch-size 2
 ```
 
 ## 10. 结果训练和表格

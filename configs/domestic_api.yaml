@@ -21,6 +21,11 @@ api_sensitivity:
     model_id: deepseek-v4-flash
     api_key_env: DEEPSEEK_API_KEY
     base_url_env: DEEPSEEK_BASE_URL
+  deepseek_v4_pro:
+    provider: deepseek
+    model_id: deepseek-v4-pro
+    api_key_env: DEEPSEEK_API_KEY
+    base_url_env: DEEPSEEK_BASE_URL
 
 example_commands:
   qwen_plus_raguard_20: >-
@@ -31,3 +36,7 @@ example_commands:
     python scripts/generate_candidates.py --input data/raguard.jsonl
     --output runs/raguard-kimi-smoke/candidates/kimi-k2-k5.jsonl
     --provider kimi --model kimi-k2 --k 5 --limit 20
+  deepseek_v4_pro_raguard_20: >-
+    python scripts/generate_candidates.py --input data/raguard.jsonl
+    --output runs/deepseek-v4-pro-smoke/candidates/deepseek-v4-pro-k5.jsonl
+    --provider deepseek --model deepseek-v4-pro --k 5 --limit 20 --batch-size 2

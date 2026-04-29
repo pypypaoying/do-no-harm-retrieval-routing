@@ -56,9 +56,27 @@
       "problemMatcher": []
     },
     {
+      "label": "API: check DeepSeek V4 Pro",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\check_provider_connectivity.py --provider deepseek --model deepseek-v4-pro --base-url-env DEEPSEEK_BASE_URL --api-key-env DEEPSEEK_API_KEY",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "API: DeepSeek 20-example smoke",
       "type": "shell",
       "command": ".\\.venv\\Scripts\\python.exe scripts\\download_data.py --config configs\\raguard.yaml --output data\\raguard.jsonl; .\\.venv\\Scripts\\python.exe scripts\\generate_candidates.py --input data\\raguard.jsonl --output runs\\deepseek-smoke\\candidates\\deepseek-chat-k5.jsonl --provider deepseek --model deepseek-chat --k 5 --limit 20 --batch-size 2",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "API: DeepSeek V4 Pro 20-example smoke",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\download_data.py --config configs\\raguard.yaml --output data\\raguard.jsonl; .\\.venv\\Scripts\\python.exe scripts\\generate_candidates.py --input data\\raguard.jsonl --output runs\\deepseek-v4-pro-smoke\\candidates\\deepseek-v4-pro-k5.jsonl --provider deepseek --model deepseek-v4-pro --k 5 --limit 20 --batch-size 2",
       "options": {
         "cwd": "${workspaceFolder}"
       },
