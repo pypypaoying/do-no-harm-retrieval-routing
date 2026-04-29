@@ -17,7 +17,7 @@ Set the corresponding environment variables:
 
 ```bash
 export DASHSCOPE_API_KEY=...
-export DASHSCOPE_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+export DASHSCOPE_BASE_URL=https://dashscope-intl.aliyuncs.com/compatible-mode/v1
 export KIMI_API_KEY=...
 export KIMI_BASE_URL=https://api.moonshot.cn/v1
 export DEEPSEEK_API_KEY=...
@@ -27,3 +27,12 @@ export DNH_MAX_CONTEXT_CHARS=6000
 
 Keep `DNH_MAX_CONTEXT_CHARS` at 6000 for smoke/full API runs unless you intentionally want
 to spend more on long contexts.
+
+DashScope OpenAI-compatible endpoints vary by region. Alibaba Cloud documents these base URLs:
+
+- Beijing: `https://dashscope.aliyuncs.com/compatible-mode/v1`
+- Singapore: `https://dashscope-intl.aliyuncs.com/compatible-mode/v1`
+- Virginia: `https://dashscope-us.aliyuncs.com/compatible-mode/v1`
+- Hong Kong: `https://cn-hongkong.dashscope.aliyuncs.com/compatible-mode/v1`
+
+Codex Cloud may be outside mainland China, so try Singapore or Virginia first if the Beijing endpoint returns proxy `403 Forbidden`.
