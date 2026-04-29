@@ -30,6 +30,7 @@ python -m pytest
 ```
 
 The smoke test uses the built-in `echo` provider and does not call external APIs.
+For VSCode-based local runs, see `docs/vscode_local_run.md`.
 
 ## Codex Cloud Setup
 

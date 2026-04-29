@@ -5,6 +5,13 @@ import time
 from dataclasses import dataclass
 from typing import Iterable, Protocol
 
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(override=False)
+except Exception:
+    pass
+
 
 class TextProvider(Protocol):
     def generate(self, prompts: list[str]) -> list[str]:

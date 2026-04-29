@@ -1,0 +1,77 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup: create venv and install deps",
+      "type": "shell",
+      "command": "python -m venv .venv; .\\.venv\\Scripts\\python.exe -m pip install --upgrade pip; .\\.venv\\Scripts\\python.exe -m pip install -r requirements.txt; .\\.venv\\Scripts\\python.exe -m pip install -e .",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Check: environment",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\check_environment.py",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test: unit tests",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\run_unit_tests.py",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Smoke: local echo pipeline",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\smoke_test.py --run-id vscode-smoke",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Data: build RAGuard jsonl",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\download_data.py --config configs\\raguard.yaml --output data\\raguard.jsonl",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "API: check DeepSeek",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\check_provider_connectivity.py --provider deepseek --model deepseek-chat --base-url-env DEEPSEEK_BASE_URL --api-key-env DEEPSEEK_API_KEY",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "API: DeepSeek 20-example smoke",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\download_data.py --config configs\\raguard.yaml --output data\\raguard.jsonl; .\\.venv\\Scripts\\python.exe scripts\\generate_candidates.py --input data\\raguard.jsonl --output runs\\deepseek-smoke\\candidates\\deepseek-chat-k5.jsonl --provider deepseek --model deepseek-chat --k 5 --limit 20 --batch-size 2",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "API: check Qwen",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe scripts\\check_provider_connectivity.py --provider qwen --model qwen-plus --base-url-env DASHSCOPE_BASE_URL --api-key-env DASHSCOPE_API_KEY",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
