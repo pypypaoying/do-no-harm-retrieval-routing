@@ -30,3 +30,18 @@ def test_context_truncation():
             os.environ.pop("DNH_MAX_CONTEXT_CHARS", None)
         else:
             os.environ["DNH_MAX_CONTEXT_CHARS"] = old
+
+
+def test_context_includes_title_without_annotation_label():
+    context = [
+        {
+            "title": "GM leads US auto sales",
+            "text": "[Link Post]",
+            "claim_document_label": "misleading",
+            "label": "misleading",
+        }
+    ]
+    formatted = format_context(context)
+    assert "GM leads US auto sales" in formatted
+    assert "[Link Post]" in formatted
+    assert "misleading" not in formatted

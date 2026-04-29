@@ -22,6 +22,24 @@ def _truncate(text: str, max_chars: int) -> str:
     return text[:max_chars].rstrip() + "\n[TRUNCATED]"
 
 
+def _format_document(item: Any) -> str:
+    if not isinstance(item, dict):
+        return str(item)
+    parts = []
+    title = item.get("title") or item.get("Title")
+    text = item.get("text") or item.get("content") or item.get("document") or item.get("Full Text")
+    link = item.get("link") or item.get("url") or item.get("Link")
+    if title:
+        parts.append(f"Title: {title}")
+    if text:
+        parts.append(f"Text: {text}")
+    if link:
+        parts.append(f"URL: {link}")
+    if not parts:
+        parts.append(str(item))
+    return "\n".join(parts)
+
+
 def format_context(context: Any, k: int | None = None) -> str:
     max_chars = _max_context_chars()
     if context is None:
@@ -32,11 +50,7 @@ def format_context(context: Any, k: int | None = None) -> str:
         rows = context[:k] if k else context
         parts: list[str] = []
         for idx, item in enumerate(rows, start=1):
-            if isinstance(item, dict):
-                text = item.get("text") or item.get("content") or item.get("document") or str(item)
-            else:
-                text = str(item)
-            parts.append(f"[{idx}] {text}")
+            parts.append(f"[{idx}] {_format_document(item)}")
         return _truncate("\n".join(parts), max_chars)
     return _truncate(str(context), max_chars)
 
