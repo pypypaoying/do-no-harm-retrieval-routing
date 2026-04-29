@@ -1,0 +1,19 @@
+{
+  "proposal_id": "c359ddc6-45e8-4384-90ae-14ea9785c73e",
+  "description": "Inference-time router for retrieval-augmented generation that decides per query whether to trust retrieval, answer without retrieval, or abstain using counterfactual stability, context sufficiency, and confidence/disagreement signals; evaluated on RAGuard and RC-RAG with a strong RC-RAG+fallback baseline.",
+  "quality_score": 3.67,
+  "target_quality_score_after_revision": 4.1,
+  "scoring_system": "evaluation/scoring_system.md",
+  "scores": {
+    "insight_depth": 3,
+    "importance": 4,
+    "significance": 3,
+    "sharpness": 4,
+    "decisiveness": 4,
+    "soundness": 4,
+    "feasibility": 4
+  },
+  "elegance": 4,
+  "ethical_risks": 2,
+  "finalized_at": "2026-04-28T22:12:56.561635+00:00"
+}

@@ -1,0 +1,33 @@
+api_sensitivity:
+  # Recommended low-cost replacements for Claude sensitivity runs.
+  # Pick one provider/model pair and pass it to scripts/generate_candidates.py.
+  kimi:
+    provider: kimi
+    model_id: kimi-k2
+    api_key_env: KIMI_API_KEY
+    base_url_env: KIMI_BASE_URL
+  qwen_plus:
+    provider: qwen
+    model_id: qwen-plus
+    api_key_env: DASHSCOPE_API_KEY
+    base_url_env: DASHSCOPE_BASE_URL
+  qwen_max:
+    provider: qwen
+    model_id: qwen-max
+    api_key_env: DASHSCOPE_API_KEY
+    base_url_env: DASHSCOPE_BASE_URL
+  deepseek_v4_flash:
+    provider: deepseek
+    model_id: deepseek-v4-flash
+    api_key_env: DEEPSEEK_API_KEY
+    base_url_env: DEEPSEEK_BASE_URL
+
+example_commands:
+  qwen_plus_raguard_20: >-
+    python scripts/generate_candidates.py --input data/raguard.jsonl
+    --output runs/raguard-qwen-smoke/candidates/qwen-plus-k5.jsonl
+    --provider qwen --model qwen-plus --k 5 --limit 20
+  kimi_raguard_20: >-
+    python scripts/generate_candidates.py --input data/raguard.jsonl
+    --output runs/raguard-kimi-smoke/candidates/kimi-k2-k5.jsonl
+    --provider kimi --model kimi-k2 --k 5 --limit 20

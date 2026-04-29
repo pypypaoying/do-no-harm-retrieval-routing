@@ -1,0 +1,53 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{natbib}
+
+\title{Do-No-Harm Retrieval Routing: Multi-Signal Risk Control for Misleading Retrievals}
+\author{Anonymous}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Retrieval-augmented generation can improve factuality, but misleading or insufficient retrieval can also reduce accuracy relative to answering without retrieval.
+We study a lightweight inference-time router that decides whether to trust retrieval, fall back to a no-retrieval answer, or abstain.
+The router combines counterfactual stability, context sufficiency, and retrieval-vs-parametric disagreement signals.
+All result slots in this draft must be filled from generated experiment artifacts before submission.
+\end{abstract}
+
+\section{Introduction}
+Retrieval is often treated as a monotonic improvement to language model generation, but recent benchmarks show that retrieved context can actively harm factual decisions.
+This paper frames retrieval robustness as a do-no-harm routing problem: use retrieval when it helps, ignore it when it is likely harmful, and abstain when neither channel is reliable.
+
+\section{Related Work}
+We build on retrieval-augmented generation, risk control for RAG, context sufficiency autorating, and adaptive retrieval routing.
+Closest comparisons include RC-RAG, Sufficient Context, TARG, CF-RAG, Knowledgeable-R1, and RAGRouter-Bench.
+
+\section{Method}
+For each claim and retrieved context, we generate a zero-context answer, a standard RAG answer, and two counterfactual RAG answers.
+We compute stability, disagreement, confidence, and sufficiency features, then train a small auditable router with three actions: retrieve, no-retrieval, and abstain.
+
+\section{Experiments}
+The primary benchmark is RAGuard with retrieval depths $k=1$ and $k=5$.
+We compare against zero-context, standard RAG, RC-RAG, RC-RAG with zero-context fallback, TARG-style gating, and oracle/random routing baselines.
+
+\section{Results}
+Insert generated tables from \texttt{paper/tables/} after experiments complete.
+
+\section{Analysis}
+We analyze matched-coverage frontiers, ablations, and failure modes, including cases where retrieval is stable but misleading.
+
+\section{Limitations and Ethics}
+The primary benchmark is politically sensitive fact-checking data; conclusions should not be overgeneralized to medical or legal deployments without domain-specific validation.
+The system is an evaluation artifact, not a deployed fact-checking service.
+
+\section{Conclusion}
+This work tests whether a lightweight, auditable router can reduce retrieval-induced harm beyond a strong RC-RAG plus fallback baseline.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

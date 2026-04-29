@@ -1,0 +1,43 @@
+run:
+  id: raguard-main
+  output_dir: runs/raguard-main
+  seed: 13
+
+data:
+  benchmark: raguard
+  source: UCSC-IRKM/RAGuard
+  split: test
+  limit:
+
+generation:
+  retrieval_depths: [1, 5]
+  max_new_tokens: 64
+  temperature: 0.0
+  batch_size: 16
+  candidate_fields:
+    - zero_context
+    - rag
+    - cf_quality
+    - cf_usage
+
+models:
+  open_source:
+    - name: llama3-8b-instruct
+      provider: vllm
+      model_id: meta-llama/Meta-Llama-3-8B-Instruct
+    - name: mistral-7b-instruct-v02
+      provider: vllm
+      model_id: mistralai/Mistral-7B-Instruct-v0.2
+  api_sensitivity:
+    - name: claude-opus-sensitivity
+      provider: anthropic
+      model_id: ${ANTHROPIC_MODEL}
+
+autorater:
+  provider: google
+  model_id: ${GEMINI_MODEL}
+
+router:
+  folds: 5
+  coverage_points: [0.70, 0.80, 0.90, 0.95]
+  model: logistic_regression

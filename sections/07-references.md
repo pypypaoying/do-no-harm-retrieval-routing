@@ -1,0 +1,26 @@
+﻿## References
+
+- [Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the Robustness of RAG Against Misleading Retrievals](https://huggingface.co/datasets/UCSC-IRKM/RAGuard) - Zeng et al., 2025
+- [Controlling Risk of Retrieval-augmented Generation: A Counterfactual Prompting Framework](https://github.com/ict-bigdatalab/RC-RAG) - Chen et al., 2024
+- [Sufficient Context: A New Lens on Retrieval Augmented Generation Systems](https://openreview.net/forum?id=Jjr2Odj8DJ) - Joren et al., 2025
+- [CF-RAG: Counterfactual Reasoning for Retrieval-Augmented Generation](https://openreview.net/forum?id=9U51rOnGko) - 2026
+- [Knowledgeable-R1: Resisting Contextual Interference in RAG via Parametric-Knowledge Reinforcement](https://arxiv.org/abs/2506.05154) - 2026
+- [TARG: Trustworthy Adaptive Retrieval Generation](https://openreview.net/forum?id=L8gYtUZfVU) - 2026
+- [RAGRouter-Bench: A Dataset and Benchmark for Adaptive RAG Routing](https://arxiv.org/abs/2602.00296) - 2026
+- [SELF-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection](https://openreview.net/forum?id=hSyW5go0v8) - Asai et al., 2024
+- [Self-Routing RAG: Binding Selective Retrieval with Knowledge Verbalization](https://arxiv.org/abs/2504.01018) - 2025
+- [TRAQ: Trustworthy Retrieval Augmented Question Answering via Conformal Prediction](https://aclanthology.org/2024.naacl-long.227/) - Li et al., 2024
+- [RePlug: Retrieval-Augmented Black-Box Language Models](https://arxiv.org/abs/2301.12652) - Shi et al., 2023
+- [In-Context Retrieval-Augmented Language Models](https://aclanthology.org/2023.tacl-1.75/) - Ram et al., 2023
+- [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html) - Lewis et al., 2020
+- [REALM: Retrieval-Augmented Language Model Pre-Training](https://proceedings.mlr.press/v119/guu20a.html) - Guu et al., 2020
+- [Dense Passage Retrieval for Open-Domain Question Answering](https://aclanthology.org/2020.emnlp-main.550/) - Karpukhin et al., 2020
+- [ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction](https://dl.acm.org/doi/10.1145/3397271.3401075) - Khattab & Zaharia, 2020
+- [FiD: Leveraging Passage Retrieval with Generative Models for Open Domain QA](https://aclanthology.org/2021.acl-long.340/) - Izacard & Grave, 2021
+- [ATLAS: Few-shot Learning with Retrieval Augmented Language Models](https://jmlr.org/papers/v24/23-0037.html) - Izacard et al., 2023
+- [When Not to Trust Language Models: Investigating Effectiveness of Parametric and Non-Parametric Memories](https://aclanthology.org/2023.acl-long.548/) - Mallen et al., 2023
+- [Making Retrieval-Augmented Language Models Robust to Irrelevant Context](https://openreview.net/forum?id=4As7l7T5oV) - Yoran et al., 2024
+- [Just Ask for Calibration: Strategies for Eliciting Calibrated Confidence Scores from Language Models Fine-Tuned with Human Feedback](https://aclanthology.org/2023.emnlp-main.311/) - Tian et al., 2023
+- [Language Models (Mostly) Know What They Know](https://arxiv.org/abs/2207.05221) - Kadavath et al., 2022
+- [Generating with Confidence: Uncertainty Quantification for Black-Box Large Language Models](https://arxiv.org/abs/2305.19187) - Lin et al., 2023
+- [Confidence Matters: Revisiting Intrinsic Self-Correction Capabilities of Large Language Models](https://arxiv.org/abs/2402.12563) - Li et al., 2024
