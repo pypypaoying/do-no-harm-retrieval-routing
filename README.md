@@ -59,3 +59,22 @@ codex cloud exec --env <ENV_ID> --branch main "Run Task 1 from configs/codex_clo
 6. Generate paper tables/figures and fill the paper.
 
 Do not hand-edit result tables in the paper. Generate them from `runs/<run-id>/manifest.json`.
+
+## Hugging Face Network Fallback
+
+If Codex Cloud returns `httpx.ProxyError: 403 Forbidden` when accessing Hugging Face,
+download the two RAGuard CSV files outside Codex Cloud and pass local/mirrored paths:
+
+```bash
+python scripts/download_data.py \
+  --claims-csv data/raw/raguard/claims.csv \
+  --documents-csv data/raw/raguard/documents.csv \
+  --output data/raguard.jsonl
+```
+
+You can also set:
+
+```bash
+export RAGUARD_CLAIMS_URL=<mirror-or-signed-url-to-claims.csv>
+export RAGUARD_DOCUMENTS_URL=<mirror-or-signed-url-to-documents.csv>
+```

@@ -15,6 +15,8 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="configs/raguard.yaml")
     parser.add_argument("--source")
+    parser.add_argument("--claims-csv")
+    parser.add_argument("--documents-csv")
     parser.add_argument("--split")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--output", required=True)
@@ -26,7 +28,11 @@ def main() -> None:
     split = args.split or data_cfg.get("split", "test")
     limit = args.limit if args.limit is not None else data_cfg.get("limit")
 
-    if Path(source).exists():
+    if args.claims_csv and args.documents_csv:
+        from dnh_router.data import load_raguard_csvs
+
+        records = load_raguard_csvs(args.claims_csv, args.documents_csv, limit=limit)
+    elif Path(source).exists():
         records = load_local_tables(source)
         records = records[:limit] if limit else records
     else:

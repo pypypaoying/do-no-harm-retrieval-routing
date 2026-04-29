@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import ast
+import os
 from pathlib import Path
 from typing import Any
 
@@ -58,6 +60,83 @@ def _records_from_dataframe(df: pd.DataFrame) -> list[dict[str, Any]]:
     return [normalize_record(row.dropna().to_dict(), idx) for idx, (_, row) in enumerate(df.iterrows())]
 
 
+def _parse_maybe_list(value: Any) -> list[Any]:
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return []
+    if isinstance(value, list):
+        return value
+    text = str(value).strip()
+    if not text:
+        return []
+    try:
+        parsed = ast.literal_eval(text)
+        if isinstance(parsed, list):
+            return parsed
+    except (ValueError, SyntaxError):
+        pass
+    return [part.strip() for part in text.split(",") if part.strip()]
+
+
+def _truth_value(value: Any) -> str:
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    text = str(value).strip().lower()
+    if text in {"true", "mostly-true", "half-true"}:
+        return "true"
+    if text in {"false", "mostly-false", "pants-fire"}:
+        return "false"
+    return normalize_label(text)
+
+
+def load_raguard_csvs(claims_path: str, documents_path: str, limit: int | None = None) -> list[dict[str, Any]]:
+    claims = pd.read_csv(claims_path)
+    documents = pd.read_csv(documents_path)
+    docs_by_id: dict[str, dict[str, Any]] = {}
+    docs_by_claim: dict[str, list[dict[str, Any]]] = {}
+    for _, row in documents.iterrows():
+        doc_id = str(row.get("Document ID", "")).strip()
+        claim_id = str(row.get("Claim ID", "")).strip()
+        doc = {
+            "id": doc_id,
+            "title": "" if pd.isna(row.get("Title")) else str(row.get("Title")),
+            "text": "" if pd.isna(row.get("Full Text")) else str(row.get("Full Text")),
+            "label": "" if pd.isna(row.get("Document Label")) else str(row.get("Document Label")),
+            "link": "" if pd.isna(row.get("Link")) else str(row.get("Link")),
+        }
+        if doc_id:
+            docs_by_id[doc_id] = doc
+        if claim_id:
+            docs_by_claim.setdefault(claim_id, []).append(doc)
+
+    records: list[dict[str, Any]] = []
+    for idx, row in claims.iterrows():
+        claim_id = str(row.get("Claim ID", idx)).strip()
+        doc_ids = [str(item).strip() for item in _parse_maybe_list(row.get("Document IDs"))]
+        doc_labels = [str(item).strip() for item in _parse_maybe_list(row.get("Document Labels"))]
+        context = []
+        for pos, doc_id in enumerate(doc_ids):
+            doc = dict(docs_by_id.get(doc_id, {"id": doc_id, "text": "", "title": "", "label": "", "link": ""}))
+            if pos < len(doc_labels) and doc_labels[pos]:
+                doc["claim_document_label"] = doc_labels[pos]
+            context.append(doc)
+        if not context:
+            context = docs_by_claim.get(claim_id, [])
+        records.append(
+            {
+                "id": claim_id,
+                "claim": "" if pd.isna(row.get("Claim")) else str(row.get("Claim")),
+                "gold": _truth_value(row.get("Verdict")),
+                "context": context,
+                "source": {
+                    "original_verdict": "" if pd.isna(row.get("Original Verdict")) else str(row.get("Original Verdict")),
+                    "document_ids": doc_ids,
+                    "document_labels": doc_labels,
+                },
+            }
+        )
+    return records[:limit] if limit else records
+
+
 def load_local_tables(path: str | Path) -> list[dict[str, Any]]:
     path = Path(path)
     files = [path] if path.is_file() else list(path.rglob("*"))
@@ -75,6 +154,13 @@ def load_local_tables(path: str | Path) -> list[dict[str, Any]]:
 
 
 def load_raguard(source: str = "UCSC-IRKM/RAGuard", split: str | None = "test", limit: int | None = None) -> list[dict[str, Any]]:
+    claims_source = os.getenv("RAGUARD_CLAIMS_URL", "https://huggingface.co/datasets/UCSC-IRKM/RAGuard/resolve/main/claims.csv")
+    documents_source = os.getenv("RAGUARD_DOCUMENTS_URL", "https://huggingface.co/datasets/UCSC-IRKM/RAGuard/resolve/main/documents.csv")
+    try:
+        return load_raguard_csvs(claims_source, documents_source, limit=limit)
+    except Exception:
+        pass
+
     try:
         from datasets import load_dataset
 
