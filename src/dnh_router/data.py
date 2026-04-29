@@ -154,6 +154,14 @@ def load_local_tables(path: str | Path) -> list[dict[str, Any]]:
 
 
 def load_raguard(source: str = "UCSC-IRKM/RAGuard", split: str | None = "test", limit: int | None = None) -> list[dict[str, Any]]:
+    local_candidates = [
+        (Path("external_data/raguard/claims.csv"), Path("external_data/raguard/documents.csv")),
+        (Path("data/raw/raguard/claims.csv"), Path("data/raw/raguard/documents.csv")),
+    ]
+    for claims_path, documents_path in local_candidates:
+        if claims_path.exists() and documents_path.exists():
+            return load_raguard_csvs(str(claims_path), str(documents_path), limit=limit)
+
     claims_source = os.getenv("RAGUARD_CLAIMS_URL", "https://huggingface.co/datasets/UCSC-IRKM/RAGuard/resolve/main/claims.csv")
     documents_source = os.getenv("RAGUARD_DOCUMENTS_URL", "https://huggingface.co/datasets/UCSC-IRKM/RAGuard/resolve/main/documents.csv")
     try:

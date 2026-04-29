@@ -63,7 +63,21 @@ Do not hand-edit result tables in the paper. Generate them from `runs/<run-id>/m
 ## Hugging Face Network Fallback
 
 If Codex Cloud returns `httpx.ProxyError: 403 Forbidden` when accessing Hugging Face,
-download the two RAGuard CSV files outside Codex Cloud and pass local/mirrored paths:
+download the two RAGuard CSV files outside Codex Cloud and commit them under
+`external_data/raguard/`:
+
+```text
+external_data/raguard/claims.csv
+external_data/raguard/documents.csv
+```
+
+The default command will then read the local mirror automatically:
+
+```bash
+python scripts/download_data.py --config configs/raguard.yaml --output data/raguard.jsonl
+```
+
+You can also pass local/mirrored paths explicitly:
 
 ```bash
 python scripts/download_data.py \

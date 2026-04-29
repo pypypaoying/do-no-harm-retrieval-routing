@@ -21,6 +21,10 @@ python scripts/summarize_results.py --run-dir runs/raguard-smoke
 
 Verify the manifest exists and the metrics JSON is parseable.
 
+If Hugging Face access fails with `httpx.ProxyError: 403 Forbidden`, do not keep retrying the Hub.
+Ask for `external_data/raguard/claims.csv` and `external_data/raguard/documents.csv` to be committed,
+then rerun the same command sequence. The downloader automatically prefers those local CSVs.
+
 ## Task 3: Open-Source Full Generation
 
 Run Llama 3 and Mistral full RAGuard candidate generation for `k=1` and `k=5`.
