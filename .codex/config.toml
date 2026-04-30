@@ -1,0 +1,13 @@
+﻿# Project-local Codex defaults for local worker sessions.
+# Keep the worker inside this workspace and avoid interactive approval prompts.
+sandbox_mode = "workspace-write"
+approval_policy = "never"
+
+[mcp_servers.local_codex_worker]
+command = "codex"
+args = ["mcp-server"]
+cwd = "D:/proposal/7454939164195160320-proposal-202604290247/agents/ideation/finalized_research_proposals/do-no-harm-retrieval-routing"
+startup_timeout_sec = 20
+tool_timeout_sec = 3600
+enabled = true
+required = true
